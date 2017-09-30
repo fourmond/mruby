@@ -5,7 +5,7 @@ MRuby::Toolchain.new(:gcc) do |conf, _params|
     cc.defines = %w(DISABLE_GEMS)
     cc.option_include_path = '-I%s'
     cc.option_define = '-D%s'
-    cc.compile_options = '%{flags} -MMD -o %{outfile} -c %{infile}'
+    cc.compile_options = '%{flags} -arch i386 -arch x86_64 -o %{outfile} -c %{infile}'
     cc.cxx_compile_flag = '-x c++ -std=c++03'
     cc.cxx_exception_flag = '-fexceptions'
   end
@@ -16,14 +16,14 @@ MRuby::Toolchain.new(:gcc) do |conf, _params|
     cxx.defines = %w(DISABLE_GEMS)
     cxx.option_include_path = '-I%s'
     cxx.option_define = '-D%s'
-    cxx.compile_options = '%{flags} -MMD -o %{outfile} -c %{infile}'
+    cxx.compile_options = '%{flags} -arch i386 -arch x86_64 -o %{outfile} -c %{infile}'
     cxx.cxx_compile_flag = '-x c++ -std=c++03'
     cxx.cxx_exception_flag = '-fexceptions'
   end
 
   conf.linker do |linker|
     linker.command = ENV['LD'] || 'gcc'
-    linker.flags = [ENV['LDFLAGS'] || %w()]
+    linker.flags = [ENV['LDFLAGS'] || %w(-arch i386 -arch x86_64)]
     linker.libraries = %w(m)
     linker.library_paths = []
     linker.option_library = '-l%s'
